@@ -9,12 +9,17 @@
     font-family: Arial, sans-serif;
     text-align: center;
   }
+ p {
+    font-size:80px;
+    color: rgba(200, 140,110);
+  }
   #stopwatch {
-    font-size: 2em;
+    font-size: 15em;
     margin: 50px 0;
+    color: black; /* Default color */
   }
   #lap-times {
-    font-size: 1.2em;
+    font-size: 15em;
     margin-bottom: 20px;
   }
   button {
@@ -23,9 +28,20 @@
     margin: 5px;
     cursor: pointer;
   }
+  footer{
+     background: linear-gradient(to right, #4CAF50, #FFC107);
+     color: #ffffff;
+     text-align: center;
+     padding: 20px;
+     position: fixed;
+     bottom: 0;
+     left: 0;
+     width: 100%;
+   }
 </style>
 </head>
 <body>
+<p>Stopwatch</p>
 <div id="stopwatch">00:00:00</div>
 <button onclick="startStopwatch()">Start</button>
 <button onclick="pauseStopwatch()">Pause</button>
@@ -40,12 +56,14 @@
     if (!running) {
       startTime = Date.now();
       interval = setInterval(updateStopwatch, 10);
+      document.getElementById('stopwatch').style.color = "green";
       running = true;
     }
   }
 
   function pauseStopwatch() {
     clearInterval(interval);
+    document.getElementById('stopwatch').style.color = "red"; // Change color to red
     running = false;
   }
 
@@ -53,6 +71,7 @@
     clearInterval(interval);
     document.getElementById('stopwatch').textContent = '00:00:00';
     document.getElementById('lap-times').innerHTML = '';
+    document.getElementById('stopwatch').style.color = "black"; // Reset color to default
     running = false;
   }
 
@@ -79,5 +98,8 @@
     }
   }
 </script>
+<footer>
+&copy; copyright All right reserved by prem vishwakarma.
+</footer>
 </body>
 </html>
