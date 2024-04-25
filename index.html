@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stopwatch</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+  }
+  #stopwatch {
+    font-size: 2em;
+    margin: 50px 0;
+  }
+  #lap-times {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+  }
+  button {
+    font-size: 1em;
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+<div id="stopwatch">00:00:00</div>
+<button onclick="startStopwatch()">Start</button>
+<button onclick="pauseStopwatch()">Pause</button>
+<button onclick="resetStopwatch()">Reset</button>
+<div id="lap-times"></div>
+<script>
+  let startTime;
+  let running = false;
+  let interval;
+
+  function startStopwatch() {
+    if (!running) {
+      startTime = Date.now();
+      interval = setInterval(updateStopwatch, 10);
+      running = true;
+    }
+  }
+
+  function pauseStopwatch() {
+    clearInterval(interval);
+    running = false;
+  }
+
+  function resetStopwatch() {
+    clearInterval(interval);
+    document.getElementById('stopwatch').textContent = '00:00:00';
+    document.getElementById('lap-times').innerHTML = '';
+    running = false;
+  }
+
+  function updateStopwatch() {
+    let elapsedTime = Date.now() - startTime;
+    let milliseconds = Math.floor((elapsedTime % 1000) / 10);
+    let seconds = Math.floor((elapsedTime / 1000) % 60);
+    let minutes = Math.floor((elapsedTime / (1000 * 60)) % 60);
+    let hours = Math.floor((elapsedTime / (1000 * 60 * 60)) % 24);
+
+    milliseconds = (milliseconds < 10) ? '0' + milliseconds : milliseconds;
+    seconds = (seconds < 10) ? '0' + seconds : seconds;
+    minutes = (minutes < 10) ? '0' + minutes : minutes;
+    hours = (hours < 10) ? '0' + hours : hours;
+
+    document.getElementById('stopwatch').textContent = hours + ':' + minutes + ':' + seconds + '.' + milliseconds;
+  }
+
+  function lap() {
+    if (running) {
+      let lapTime = document.createElement('div');
+      lapTime.textContent = document.getElementById('stopwatch').textContent;
+      document.getElementById('lap-times').appendChild(lapTime);
+    }
+  }
+</script>
+</body>
+</html>
